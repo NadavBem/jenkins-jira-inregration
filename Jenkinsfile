@@ -1,35 +1,59 @@
 pipeline {
-    agent any
-
-    environment {
-        JIRA_SITE = 'nadav jira' // Jenkins Jira configuration name
-    }
-
-    stages {
-        stage('Extract Branch Name and Transition Issue') {
-            steps {
-                script {
-                    // Extract the branch name from the merge commit message
-                    def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                    echo "Commit message: ${commitMessage}"
-
-                    // Assuming the branch name is the second part of the message, e.g., "Merge pull request #5 from branch_name"
-                    def branchName = commitMessage.split('/')[2]
-                    echo "Extracted branch name: ${branchName}"
-
-                    // Define the transition input for the Jira issue
-                    def transitionInput = [
-                        transition: [
-                            id: '31' // Replace with the actual transition ID for "Done"
-                        ]
-                    ]
-
-                    // Perform the Jira issue transition using the extracted branch name as the issue key
-                    jiraTransitionIssue idOrKey: branchName, input: transitionInput, site: env.JIRA_SITE
-                    echo "JIRA issue ${branchName} transitioned to 'Done'"
+  agent any
+  
+  // environment {
+  //   JIRA_CREDENTIALS_ID = 'jira_credentials' // Jenkins credentials ID for Jira
+  //   JIRA_BASE_URL = 'http://172.20.0.2:8080/' // Jira  URL
+  //   JIRA_SITE_NAME = 'nadav jira' // Jira site name 
+  // }
+  
+  stages {
+    stage('Get Last Merged Branch Name') {
+        steps {
+            script {
+                // Get the last commit message and extract the branch name
+                def lastCommitMessage = sh(script: 'git log -1 --pretty=format:%s', returnStdout: true).trim()
+    
+                // Define a pattern to extract the branch name from the commit message
+                def mergeBranchPattern = ~/Merge pull request #\d+ from (.+)/
+                def matcher = lastCommitMessage =~ mergeBranchPattern
+    
+                if (matcher.find()) {
+                    def capturedGroup = matcher.group(1).trim()
+                    def finalOutput = capturedGroup.split('/')[-1]  // Split by '/' and get the last element
+                    env.JIRA_ISSUE_KEY = finalOutput
+                } 
+                else {
+                    error("No merge found into 'main'. Unable to determine Jira issue key.")
                 }
             }
         }
     }
-}
 
+
+    stage('Transition Jira Issue to Done') {
+      steps {
+        script {
+          def issueKey = env.JIRA_ISSUE_KEY
+          if (issueKey) {
+            withEnv(["JIRA_SITE=nadav jira"]) {
+              def transitionInput = [
+                transition: [id: '31']
+              ]
+              
+              jiraTransitionIssue idOrKey: issueKey, input: transitionInput
+            }
+          } else {
+            error("Jira issue key is null. Cannot transition to Done.")
+          }
+        }
+      }
+    }
+  }
+  
+  post {
+    always {
+      echo 'Pipeline completed.'
+    }
+  }
+}
