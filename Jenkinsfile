@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        JIRA_SITE = 'your-jira-site' // Jenkins Jira configuration name
+        JIRA_SITE = 'nadav jira' // Jenkins Jira configuration name
     }
     stages {
         stage('Check Pull Request') {
