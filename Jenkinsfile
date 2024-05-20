@@ -4,11 +4,6 @@ pipeline {
     environment {
         JIRA_SITE = 'nadav jira' // Jenkins Jira configuration name
     }
-
-    triggers {
-        githubPullRequest()
-    }
-
     stages {
         stage('Print Environment Variables') {
             steps {
