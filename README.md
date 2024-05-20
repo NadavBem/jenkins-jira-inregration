@@ -10,7 +10,7 @@ Use your chosen configuration and infrastructure as code utility (Terraform/Chef
    hyphen, followed by an integer)
    c. Move the Jira issue to “Done”
 
-### So, lets solve it: 
+### so, lets solve it:
 
 <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/diagram.jpg.jpg?raw=true">
 
