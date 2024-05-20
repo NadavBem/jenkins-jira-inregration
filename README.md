@@ -12,7 +12,7 @@ Use your chosen configuration and infrastructure as code utility (Terraform/Chef
 
 ### so, lets solve it:
 
-<img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/diagram.jpg.jpg?raw=true">
+<img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/diagram.jpg?raw=true">
 
 
 1. **Creating docker-compose file with jira and jenkins**
@@ -28,9 +28,9 @@ Use your chosen configuration and infrastructure as code utility (Terraform/Chef
    - Configure Jira authentication in Jenkins using a username and password.
    - Create a Jira site and verify the connection.
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/jirasite.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/JIRA.png?raw=true">
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/jirasite3.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/JIRA%20Steps.png?raw=true">
 
 4. **Jenkins and Git Integration**
    To establish a connection between Jenkins and GitHub, you need to create a webhook in GitHub that communicates with Jenkins. Follow these steps to configure it properly:
@@ -40,31 +40,31 @@ Use your chosen configuration and infrastructure as code utility (Terraform/Chef
    - Content Type: Ensure that it's set to application/json. This specification defines how data is transmitted to Jenkins.
    - Which Events to Trigger: Select "Pull Requests". This choice ensures that Jenkins receives notifications whenever a pull request is opened or updated in your repository.
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/githubwebhook1.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/GitHub%20webhook.png?raw=true">
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/githubwebhook2.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/GitHub%20webhook_1.png?raw=true">
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/githubwebhook.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/Webhook%20Approval.png?raw=true">
 
    
    On Jenkins:
    - Install GitHub Integration Plugin: Begin by downloading and installing the GitHub Integration plugin in Jenkins. This plugin facilitates seamless communication between Jenkins and GitHub.
    - Generate GitHub Token: Create a token on GitHub, granting Jenkins the necessary permissions. Then, configure this token in Jenkins under "Manage Jenkins."
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/gittoken.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/access%20token.png?raw=true">
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/gittoken2.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/GitHub%20PlugIn.png?raw=true">
+
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/%20GitHub%20Pull%20Request%20Builder.png?raw=true">
 
    - Configure Job Settings: In your Jenkins job settings, define the GitHub project using your repository's URL. Additionally, set up Build Triggers to include "GitHub Pull Requests" with the desired trigger event (e.g., PR closed), along with "GitHub hook trigger for GITScm polling."
    - Define Pipeline: Within the pipeline section, specify the path to your Jenkinsfile. This file serves as the blueprint for your Jenkins builds, defining the steps and actions to be executed.
 By implementing these configurations, you enable smooth communication between Jenkins and GitHub. This integration empowers Jenkins to automatically trigger builds and execute predefined actions in response to events occurring within your GitHub repository.
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/jenkinsconfig1.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/General%20Configure.png?raw=true">
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/jenkinsconfig2.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/Build%20Triggers.png?raw=true">
 
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/jenkinsconfig3.png?raw=true">
-
-   <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/jenkinsconfig4.png?raw=true">
+   <img src="https://github.com/NadavBem/jenkins-jira-inregration/blob/main/Appendices/Pipeline%20from%20SCM.png?raw=true">
 
 
 5. **Jenkins File**
@@ -75,9 +75,3 @@ By implementing these configurations, you enable smooth communication between Je
 **note that every time the containers will restart , the ip adress configure in the jira site url will need to be updated. 
 
 Hope you enjoy the project ! 
-
- <img src="https://github.com/DorAvissar/JiraJenkinsIntegration/blob/main/assets/finalstep.png?raw=true">
-
-
-
-
