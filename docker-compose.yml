@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  jira:
+    image: atlassian/jira-software:9.5.0
+    container_name: jira
+    ports:
+      - "8080:8080"
+    volumes:
+      - jiraVolume:/var/atlassian/application-data/jira
+    networks:
+      - mynetwork
+    restart: unless-stopped
+
+  jenkins:
+    image: jenkins/jenkins:2.397
+    container_name: jenkins
+    ports:
+      - "8000:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - mynetwork
+    restart: unless-stopped
+
+volumes:
+  jiraVolume:
+  jenkins_home:
+
+networks:
+  mynetwork:
+    driver: bridge
